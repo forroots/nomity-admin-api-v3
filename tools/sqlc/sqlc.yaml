@@ -1,0 +1,11 @@
+version: '2'
+sql:
+  - engine: 'postgresql'
+    queries: '../../db/query.sql' # 相対パス
+    schema: '../../db/schema.sql' # 相対パス
+    gen:
+      go:
+        package: 'sqlc'
+        out: '../../internal/generated/sqlc'
+        #   sql_package: 'pgx/v5'
+        sql_package: 'database/sql'

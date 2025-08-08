@@ -1,0 +1,65 @@
+app:
+  env: 'development'
+
+server:
+  port: 8080
+  base_path: '/nomity-admin-api-v3'
+  trusted_proxies:
+    - '127.0.0.1'
+    - '192.168.1.0/24'
+
+database:
+  driver: 'postgres'
+  host: 'localhost'
+  port: 5430
+  user: 'nomity_dev'
+  password: 'nomity_dev'
+  dbname: 'nomity_dev'
+  sslmode: 'disable'
+  debug: true
+
+cookie:
+  session_id:
+    name: 'session_id'
+    path: '/'
+    domain: 'localhost'
+    secure: false
+    http_only: true
+    same_site: 'Strict'
+    max_age: 3600 # 1 hour
+
+  csrf_token:
+    name: 'csrf_token'
+    path: '/'
+    domain: 'localhost'
+    secure: false
+    http_only: false
+    same_site: 'Strict'
+    max_age: 3600 # 1 hour
+
+cors:
+  enabled: true
+  allow_origins:
+    - 'http://localhost:3000'
+  advanced_allow_headers:
+    - 'X-Request-ID'
+    - 'X-CSRF-Token'
+
+csrf:
+  enabled: true
+  token_cookie_name: 'csrf_token'
+  token_header: 'X-CSRF-Token'
+
+mailer:
+  debug_print: true
+  mock: false
+  notify_recipients:
+    - 'kcntsurk@gmail.com'
+
+smtp:
+  host: 'smtp.gmail.com'
+  port: 587
+  username: 'info@diverlabo-support.com'
+  password: 'fripnntdhdpjezaw'
+  from: 'info@diverlabo-support.com'
+  from_name: 'Nomity Admin（dev:Gmail）'

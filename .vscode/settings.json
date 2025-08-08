@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5430,
+            "driver": "PostgreSQL",
+            "name": "nomity_dev",
+            "group": "ForRoots",
+            "database": "nomity_dev",
+            "username": "nomity_dev",
+            "password": "nomity_dev"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+# Docker image ビルド時の注意
+docker の image ビルド中に  
+RUN apt update && apt install  
+などの部分でエラーが出たらキャッシュの容量がいっぱいになっている可能性あり。以下を実行後、やり直してみる。  
+sudo docker builder prune
+（docker builder prune について  
+Docker ビルドプロセスで生成された未使用のキャッシュを削除し、ディスクスペースを解放するために使用されます。
+ディスクスペースの管理を適切に行うために、定期的に実行することが推奨されます。）
+
+# Docker container 起動時の注意
+Goのバイナリファイルを開発環境からLinux上にコピーしたときに、実行属性がついていない状態になっている可能性がある（そのファイル名が初めてだと）。
+以下のように実行権限をつける。
+chmod +x app/prod_nomity_admin_api
+

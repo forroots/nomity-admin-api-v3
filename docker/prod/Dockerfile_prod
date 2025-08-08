@@ -1,0 +1,20 @@
+FROM alpine:3.21
+
+# 必要なもの（TLS通信向け）
+RUN apk add --no-cache ca-certificates
+
+# 実行ファイルと設定ファイルをコンテナにコピー
+WORKDIR /app
+COPY ./app/* /app/
+RUN chmod +x /app/prod_nomity_admin_api
+
+# タイムゾーン設定（任意）
+RUN apk add --no-cache tzdata \
+  && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+  && echo "Asia/Tokyo" > /etc/timezone
+
+ENV TZ=Asia/Tokyo
+
+# 実行コマンド
+ENTRYPOINT ["/app/prod_nomity_admin_api"]
+CMD ["--config", "config.prod.yaml"]
