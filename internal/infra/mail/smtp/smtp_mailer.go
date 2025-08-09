@@ -1,4 +1,4 @@
-package mail
+package smtp
 
 import (
 	"encoding/base64"
@@ -8,7 +8,19 @@ import (
 	"strings"
 )
 
-const base64LineLength = 76 // Base64での1行の最大文字数（RFC準拠）
+const base64LineLength = 76 // Base64での1行の最大文字数（RFC準拠
+
+type SMTPMailerConfig struct {
+	Host     string
+	Port     int
+	Username string
+	Password string
+	From     string
+	FromName string
+
+	DebugPrint bool // ログ出力するかどうか
+	Mock       bool // モックモードかどうか
+}
 
 type SMTPMailer struct {
 	config SMTPMailerConfig
@@ -18,6 +30,10 @@ func NewSMTPMailer(cfg SMTPMailerConfig) *SMTPMailer {
 	return &SMTPMailer{
 		config: cfg,
 	}
+}
+
+func (m *SMTPMailer) SendSingleEmail(to string, subject, plainTextContent, htmlContent string) error {
+	return m.Send([]string{to}, nil, subject, plainTextContent)
 }
 
 func (m *SMTPMailer) Send(to []string, cc []string, subject string, body string) error {

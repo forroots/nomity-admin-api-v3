@@ -1,9 +1,12 @@
 package config
 
-type MailerConfig struct {
-	DebugPrint       bool     `mapstructure:"debug_print"`
-	Mock             bool     `mapstructure:"mock"`
-	NotifyRecipients []string `mapstructure:"notify_recipients"`
+type SendGridConfig struct {
+	APIKey    string `mapstructure:"api_key"`
+	EmailFrom string `mapstructure:"email_from"`
+	NameFrom  string `mapstructure:"name_from"`
+
+	DebugPrint bool `mapstructure:"debug_print"`
+	Mock       bool `mapstructure:"mock"`
 }
 
 type SMTPConfig struct {
@@ -13,4 +16,7 @@ type SMTPConfig struct {
 	Password string `mapstructure:"password"`
 	From     string `mapstructure:"from"`
 	FromName string `mapstructure:"from_name"`
+
+	DebugPrint bool `mapstructure:"debug_print"`
+	Mock       bool `mapstructure:"mock"`
 }

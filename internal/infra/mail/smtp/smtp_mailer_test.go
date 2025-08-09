@@ -1,4 +1,4 @@
-package mail
+package smtp
 
 import (
 	"testing"
@@ -18,13 +18,11 @@ func TestSMTPMailer_Send_Real(t *testing.T) {
 
 	mailer := NewSMTPMailer(cfg) // ログ出力を有効にし、モックモードは無効
 
-	err := mailer.Send(
-		[]string{
-			"kcntsurk@gmail.com",
-		},
-		nil,
+	err := mailer.SendSingleEmail(
+		"kcntsurk@gmail.com",
 		"integration test",
 		"これはテストメールです！",
+		"<p>これはテストメールです！</p>",
 	)
 
 	if err != nil {

@@ -11,10 +11,10 @@ import (
 )
 
 type TestHandler struct {
-	Mailer mail.Mailer
+	Mailer mail.IMailer
 }
 
-func NewMailHandler(mailer mail.Mailer) *TestHandler {
+func NewMailHandler(mailer mail.IMailer) *TestHandler {
 	return &TestHandler{
 		Mailer: mailer,
 	}
@@ -44,11 +44,11 @@ func (h *TestHandler) AppErrorTest(c *gin.Context) {
 }
 
 func (h *TestHandler) SendTestEmail(c *gin.Context) {
-	err := h.Mailer.Send(
-		[]string{"kcntsurk@gmail.com"}, // ← 実際の宛先に置き換えてください
-		nil,
+	err := h.Mailer.SendSingleEmail(
+		"kcntsurk@gmail.com", // ← 実際の宛先に置き換えてください
 		"テストメール",
 		"これはテストメールですよ。",
+		"<p>これはテストメールですよ。</p>",
 	)
 	if err != nil {
 		appErr := application.NewAppError(

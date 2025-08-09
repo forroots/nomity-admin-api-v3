@@ -24,8 +24,8 @@ type Config struct {
 
 	Database DatabaseConfig `mapstructure:"database"`
 
-	Mailer MailerConfig `mapstructure:"mailer"`
-	SMTP   SMTPConfig   `mapstructure:"smtp"`
+	SendGridConfig SendGridConfig `mapstructure:"sendgrid"`
+	SMTPConfig     SMTPConfig     `mapstructure:"smtp"`
 }
 
 func Load(path string) (*Config, error) {
