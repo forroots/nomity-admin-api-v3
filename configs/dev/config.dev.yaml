@@ -39,6 +39,7 @@ cookie:
 
 cors:
   enabled: true
+  logging: true
   allow_origins:
     - 'http://localhost:3000'
   advanced_allow_headers:

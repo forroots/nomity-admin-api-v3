@@ -38,6 +38,7 @@ type Config struct {
 		Enabled              bool     `mapstructure:"enabled"`
 		AllowOrigins         []string `mapstructure:"allow_origins"`
 		AdvancedAllowHeaders []string `mapstructure:"advanced_allow_headers"`
+		Logging              bool     `mapstructure:"logging"`
 	} `mapstructure:"cors"`
 
 	CSRF struct {

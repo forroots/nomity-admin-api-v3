@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/forroots/nomity-admin-api-v3/internal/config"
+	"github.com/forroots/nomity-admin-api-v3/internal/interface/common"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
 	"github.com/forroots/nomity-admin-api-v3/internal/shared/contextx"
 	"github.com/forroots/nomity-admin-api-v3/internal/utils"
@@ -79,8 +79,10 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 	}
 }
 
-func SetCSRFCookieIfNotExists(conf config.CookieConfig) gin.HandlerFunc {
+func SetCSRFCookieIfNotExists(conf common.CookieSettings) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		c.SetSameSite(conf.SameSite)
+
 		// すでにCSRFトークンがクッキーに存在する場合は期限をスライドする
 		cookieToken, err := c.Cookie(conf.Name)
 		if err == nil && cookieToken != "" {

@@ -9,7 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewCORSHandler(allowOrigins []string, allowHeaders []string) gin.HandlerFunc {
+func NewCORSHandler(allowOrigins []string, allowHeaders []string, logging bool) gin.HandlerFunc {
+	if logging {
+		return NewCORSWithLoggingHandler(allowOrigins, allowHeaders)
+	}
+	return newCORSHandler(allowOrigins, allowHeaders)
+}
+
+func newCORSHandler(allowOrigins []string, allowHeaders []string) gin.HandlerFunc {
 	config := cors.DefaultConfig()
 	config.AllowCredentials = true
 	config.AllowOrigins = allowOrigins
@@ -20,7 +27,7 @@ func NewCORSHandler(allowOrigins []string, allowHeaders []string) gin.HandlerFun
 }
 
 func NewCORSWithLoggingHandler(allowOrigins []string, allowHeaders []string) gin.HandlerFunc {
-	corsHandler := NewCORSHandler(allowOrigins, allowHeaders)
+	corsHandler := newCORSHandler(allowOrigins, allowHeaders)
 
 	return func(c *gin.Context) {
 		logger := contextx.GetLogger(c.Request.Context())
