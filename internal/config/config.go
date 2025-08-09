@@ -29,6 +29,13 @@ type Config struct {
 		Debug    bool   `mapstructure:"debug"`
 	} `mapstructure:"database"`
 
+	JWT struct {
+		SecretKey                string `mapstructure:"secret_key"`
+		ExpirationMinutes        int    `mapstructure:"expiration_minutes"`
+		RefreshExpirationMinutes int    `mapstructure:"refresh_expiration_minutes"`
+		SigningAlgorithm         string `mapstructure:"signing_algorithm"`
+	} `mapstructure:"jwt"`
+
 	Cookie struct {
 		SessionID CookieConfig `mapstructure:"session_id"`
 		CSRFToken CookieConfig `mapstructure:"csrf_token"`

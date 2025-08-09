@@ -79,7 +79,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 	}
 }
 
-func SetCSRFCookieIfNotExists(conf common.CookieSettings) gin.HandlerFunc {
+func SetCSRFCookieIfNotExists(conf common.CookieConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.SetSameSite(conf.SameSite)
 

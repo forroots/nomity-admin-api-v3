@@ -5,9 +5,10 @@ import (
 	"net/http"
 
 	"github.com/forroots/nomity-admin-api-v3/internal/config"
+	"github.com/gin-gonic/gin"
 )
 
-type CookieSettings struct {
+type CookieConfig struct {
 	Name     string
 	Path     string
 	Domain   string
@@ -30,10 +31,10 @@ func ConvertSameSite(s string) http.SameSite {
 	}
 }
 
-func NewCookieSettingsFromConfig(cfg config.CookieConfig) CookieSettings {
+func NewCookieSettingsFromConfig(cfg config.CookieConfig) CookieConfig {
 	sameSite := ConvertSameSite(cfg.SameSite)
 
-	return CookieSettings{
+	return CookieConfig{
 		Name:     cfg.Name,
 		Path:     cfg.Path,
 		Domain:   cfg.Domain,
@@ -42,4 +43,36 @@ func NewCookieSettingsFromConfig(cfg config.CookieConfig) CookieSettings {
 		SameSite: sameSite,
 		MaxAge:   cfg.MaxAge,
 	}
+}
+
+func (cs *CookieConfig) SetCookie(c *gin.Context, value string) {
+	c.SetCookie(
+		cs.Name,
+		value,
+		cs.MaxAge,
+		cs.Path,
+		cs.Domain,
+		cs.Secure,
+		cs.HttpOnly,
+	)
+}
+
+func (cs *CookieConfig) GetCookie(c *gin.Context) (string, error) {
+	cookie, err := c.Cookie(cs.Name)
+	if err != nil {
+		return "", err
+	}
+	return cookie, nil
+}
+
+func (cs *CookieConfig) DeleteCookie(c *gin.Context) {
+	c.SetCookie(
+		cs.Name,
+		"",
+		-1,
+		cs.Path,
+		cs.Domain,
+		cs.Secure,
+		cs.HttpOnly,
+	)
 }

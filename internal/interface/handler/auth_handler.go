@@ -1,17 +1,24 @@
 package handler
 
 import (
+	"github.com/forroots/nomity-admin-api-v3/internal/interface/common"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
+	"github.com/forroots/nomity-admin-api-v3/internal/utils/jwt"
 	"github.com/gin-gonic/gin"
 )
 
 type AuthHandler struct {
-	// 依存関係を追加
+	sessionIdCookieConf common.CookieConfig
+	jwtUtil             *jwt.JWTUtil
 }
 
-func NewAuthHandler() *AuthHandler {
+func NewAuthHandler(
+	sessionIdCookieConf common.CookieConfig,
+	jwtUtil *jwt.JWTUtil,
+) *AuthHandler {
 	return &AuthHandler{
-		// 依存関係を追加
+		sessionIdCookieConf: sessionIdCookieConf,
+		jwtUtil:             jwtUtil,
 	}
 }
 
