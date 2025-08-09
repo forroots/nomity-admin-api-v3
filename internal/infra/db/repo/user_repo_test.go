@@ -10,22 +10,6 @@ import (
 )
 
 func TestUserRepo(t *testing.T) {
-	// params := db.DBParams{
-	// 	Driver:   "postgres",
-	// 	Host:     "localhost",
-	// 	Port:     5430,
-	// 	User:     "nomity_dev",
-	// 	Password: "nomity_dev",
-	// 	DBName:   "nomity_dev",
-	// 	SSLMode:  "disable",
-	// }
-
-	// bdb, err := db.NewBunDB(params, true)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer bdb.Close()
-
 	userRepo := repo.NewUserRepo(testDB)
 
 	// 全件取得
