@@ -21,9 +21,10 @@ type LoginRequest struct {
 }
 
 func (h *AuthHandler) Login(c *gin.Context) {
+	// リクエストボディをバインド
 	var req LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{"error": "Invalid request"})
+		response.ErrorToMiddleware(c, err)
 		return
 	}
 

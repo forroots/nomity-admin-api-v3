@@ -6,6 +6,7 @@ import (
 
 	"github.com/forroots/nomity-admin-api-v3/internal/application"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
+	"github.com/forroots/nomity-admin-api-v3/internal/shared/contextx"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func NewErrorHandler() gin.HandlerFunc {
 		// 最初のエラーのみ対応（複数エラーを扱いたければfor-loop）
 		err := errs[0].Err
 
-		logger := getLogger(c)
+		logger := contextx.GetLogger(c.Request.Context())
 
 		var appErr *application.AppError
 		if errors.As(err, &appErr) {

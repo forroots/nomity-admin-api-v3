@@ -1,3 +1,3 @@
-package constants
+package common
 
 const XRequestIDHeader = "X-Request-ID"

@@ -3,7 +3,7 @@ package middleware
 import (
 	"log/slog"
 
-	"github.com/forroots/nomity-admin-api-v3/internal/interface/constants"
+	"github.com/forroots/nomity-admin-api-v3/internal/interface/common"
 	"github.com/forroots/nomity-admin-api-v3/internal/shared/contextx"
 	"github.com/forroots/nomity-admin-api-v3/internal/utils"
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ func EnrichContext(baseLogger *slog.Logger, sessionIdCookieName string) gin.Hand
 		// リクエストIDを生成
 		reqID := utils.NewULIDString()
 		// リクエストIDをヘッダーに設定
-		c.Request.Header.Set(constants.XRequestIDHeader, reqID)
+		c.Request.Header.Set(common.XRequestIDHeader, reqID)
 
 		// セッションIDを取得
 		sessionID, _ := c.Cookie(sessionIdCookieName)

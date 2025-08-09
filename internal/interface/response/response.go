@@ -11,17 +11,29 @@ type SuccessResponse struct {
 	Data    any    `json:"data,omitempty"`
 }
 
+func NewSuccessResponse(message string, data any) SuccessResponse {
+	return SuccessResponse{
+		Message: message,
+		Data:    data,
+	}
+}
+
 type ErrorResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    any    `json:"data,omitempty"`
 }
 
-func JSON(c *gin.Context, msg string, data any) {
-	c.JSON(http.StatusOK, SuccessResponse{
-		Message: msg,
+func NewErrorResponse(code, message string, data any) ErrorResponse {
+	return ErrorResponse{
+		Code:    code,
+		Message: message,
 		Data:    data,
-	})
+	}
+}
+
+func JSON(c *gin.Context, msg string, data any) {
+	c.JSON(http.StatusOK, NewSuccessResponse(msg, data))
 }
 
 func ErrorToMiddleware(c *gin.Context, err error) {
@@ -29,9 +41,5 @@ func ErrorToMiddleware(c *gin.Context, err error) {
 }
 
 func AbortWithStatusJSON(c *gin.Context, status int, code, msg string, data any) {
-	c.AbortWithStatusJSON(status, ErrorResponse{
-		Code:    code,
-		Message: msg,
-		Data:    data,
-	})
+	c.AbortWithStatusJSON(status, NewErrorResponse(code, msg, data))
 }

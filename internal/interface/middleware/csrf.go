@@ -6,6 +6,7 @@ import (
 
 	"github.com/forroots/nomity-admin-api-v3/internal/config"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
+	"github.com/forroots/nomity-admin-api-v3/internal/shared/contextx"
 	"github.com/forroots/nomity-admin-api-v3/internal/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +20,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 		}
 
 		// enriched logger があれば使う、なければ defaultのslogを使う
-		logger := getLogger(c)
+		logger := contextx.GetLogger(c)
 
 		errCode := "csrf_error"
 

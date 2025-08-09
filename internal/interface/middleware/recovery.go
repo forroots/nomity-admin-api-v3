@@ -7,6 +7,7 @@ import (
 
 	"github.com/forroots/nomity-admin-api-v3/internal/application"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
+	"github.com/forroots/nomity-admin-api-v3/internal/shared/contextx"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +17,7 @@ func CustomRecovery() gin.HandlerFunc {
 
 		msg := fmt.Sprintf("%v", recovered)
 
-		logger := getLogger(c)
+		logger := contextx.GetLogger(c.Request.Context())
 
 		logger.Error("panic recovered",
 			"error", msg,

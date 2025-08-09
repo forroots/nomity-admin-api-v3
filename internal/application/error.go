@@ -74,4 +74,5 @@ const (
 	APP_ERROR_INTERNAL_SERVER_ERROR = "internal_server_error"
 	APP_ERROR_BAD_REQUEST           = "bad_request"
 	APP_ERROR_SESSION_NOT_FOUND     = "session_not_found"
+	APP_ERROR_UNAUTHORIZED          = "unauthorized"
 )
