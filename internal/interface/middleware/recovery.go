@@ -24,6 +24,6 @@ func CustomRecovery() gin.HandlerFunc {
 
 		// JSONで返す
 		code := "internal_server_error"
-		response.Error(c, http.StatusInternalServerError, code, "大変申し訳ございません。システムに不具合が生じております。\n管理者にお問い合わせください。", nil)
+		response.AbortWithStatusJSON(c, http.StatusInternalServerError, code, "大変申し訳ございません。システムに不具合が生じております。\n管理者にお問い合わせください。", nil)
 	})
 }

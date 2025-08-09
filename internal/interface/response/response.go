@@ -24,7 +24,11 @@ func JSON(c *gin.Context, msg string, data any) {
 	})
 }
 
-func Error(c *gin.Context, status int, code, msg string, data any) {
+func ErrorToMiddleware(c *gin.Context, err error) {
+	c.Error(err)
+}
+
+func AbortWithStatusJSON(c *gin.Context, status int, code, msg string, data any) {
 	c.AbortWithStatusJSON(status, ErrorResponse{
 		Code:    code,
 		Message: msg,

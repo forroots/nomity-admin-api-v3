@@ -26,7 +26,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 		cookieToken, err := c.Cookie(cookieName)
 		if err != nil {
 			logger.Error("CSRF cookie not found", slog.Any("error", err))
-			response.Error(
+			response.AbortWithStatusJSON(
 				c,
 				http.StatusBadRequest,
 				errCode,
@@ -37,7 +37,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 		}
 		if cookieToken == "" {
 			logger.Error("CSRF cookie is empty")
-			response.Error(
+			response.AbortWithStatusJSON(
 				c,
 				http.StatusBadRequest,
 				errCode,
@@ -51,7 +51,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 		headerToken := c.GetHeader(headerName)
 		if headerToken == "" {
 			logger.Error("CSRF header not found", slog.String("header", headerName))
-			response.Error(
+			response.AbortWithStatusJSON(
 				c,
 				http.StatusBadRequest,
 				errCode,
@@ -63,7 +63,7 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 
 		if headerToken != cookieToken {
 			logger.Error("CSRF token mismatch", slog.String("cookie", cookieToken), slog.String("header", headerToken))
-			response.Error(
+			response.AbortWithStatusJSON(
 				c,
 				http.StatusForbidden,
 				errCode,

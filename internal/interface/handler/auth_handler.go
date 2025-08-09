@@ -1,6 +1,9 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
+	"github.com/gin-gonic/gin"
+)
 
 type AuthHandler struct {
 	// 依存関係を追加
@@ -26,5 +29,5 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	// ログイン処理を実装
 	// ここではダミーのレスポンスを返す
-	c.JSON(200, gin.H{"message": "Login successful", "email": req.Email})
+	response.JSON(c, "ログイン成功", nil)
 }

@@ -54,8 +54,8 @@ func WithError(err error) AppErrorOption {
 func NewInternalServerError(err error) *AppError {
 	return NewAppError(
 		WithHttpStatus(http.StatusInternalServerError),
-		WithCode("internal_server_error"),
-		WithMessage("大変申し訳ございません。システムに不具合が生じております。\n管理者にお問い合わせください。"),
+		WithCode(APP_ERROR_INTERNAL_SERVER_ERROR),
+		WithMessage("申し訳ございません。予期せぬエラーが発生しました。後ほど再度お試しください。"),
 		WithError(err),
 	)
 }
@@ -64,8 +64,14 @@ func NewInternalServerError(err error) *AppError {
 func NewBadRequestError(err error) *AppError {
 	return NewAppError(
 		WithHttpStatus(http.StatusBadRequest),
-		WithCode("bad_request"),
-		WithMessage("リクエストの内容に誤りがあります。"),
+		WithCode(APP_ERROR_BAD_REQUEST),
+		WithMessage("不正なリクエストです。入力内容を確認してください。"),
 		WithError(err),
 	)
 }
+
+const (
+	APP_ERROR_INTERNAL_SERVER_ERROR = "internal_server_error"
+	APP_ERROR_BAD_REQUEST           = "bad_request"
+	APP_ERROR_SESSION_NOT_FOUND     = "session_not_found"
+)

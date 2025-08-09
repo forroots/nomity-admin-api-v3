@@ -35,10 +35,7 @@ func NewErrorHandler() gin.HandlerFunc {
 			)
 
 			code := appErr.Code
-			if code == "" {
-				code = "application_error"
-			}
-			response.Error(c, appErr.HttpStatus, code, appErr.Message, nil)
+			response.AbortWithStatusJSON(c, appErr.HttpStatus, code, appErr.Message, nil)
 		} else {
 			// その他は500で返す
 			if logger != nil {
@@ -49,8 +46,9 @@ func NewErrorHandler() gin.HandlerFunc {
 				)
 			}
 
-			code := "internal_server_error"
-			response.Error(c, http.StatusInternalServerError, code, "大変申し訳ございません。システムに不具合が生じております。\n管理者にお問い合わせください。", nil)
+			code := application.APP_ERROR_INTERNAL_SERVER_ERROR
+			message := "申し訳ございません。予期せぬエラーが発生しました。後ほど再度お試しください。"
+			response.AbortWithStatusJSON(c, http.StatusInternalServerError, code, message, nil)
 		}
 	}
 }
