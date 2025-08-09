@@ -8,17 +8,6 @@ import (
 	_ "github.com/lib/pq" // PostgreSQLドライバ
 )
 
-type DBParams struct {
-	Driver   string
-	Host     string
-	Port     int
-	User     string
-	Password string
-	DBName   string
-	SSLMode  string
-	Debug    bool
-}
-
 func NewDB(p DBParams) (*sql.DB, error) {
 	var dsn string
 	switch p.Driver {
