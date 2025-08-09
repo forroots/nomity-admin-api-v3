@@ -1,7 +1,6 @@
 package repo_test
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -34,22 +33,4 @@ func TestMain(m *testing.M) {
 
 	_ = testDB.Close()
 	os.Exit(code)
-}
-
-func getenv(key, def string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
-	}
-	return def
-}
-
-func getenvInt(key string, def int) int {
-	if v := os.Getenv(key); v != "" {
-		var n int
-		_, _ = fmt.Sscanf(v, "%d", &n)
-		if n != 0 {
-			return n
-		}
-	}
-	return def
 }
