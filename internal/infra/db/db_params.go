@@ -2,7 +2,7 @@ package db
 
 import "fmt"
 
-type DBParams struct {
+type DBConfig struct {
 	Driver   string
 	Host     string
 	Port     int
@@ -10,9 +10,10 @@ type DBParams struct {
 	Password string
 	DBName   string
 	SSLMode  string
+	Debug    bool
 }
 
-func (p DBParams) DSN() string {
+func (p DBConfig) DSN() string {
 	switch p.Driver {
 	case "postgres":
 		return fmt.Sprintf(

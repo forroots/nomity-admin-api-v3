@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq" // PostgreSQLドライバ
 )
 
-func NewDB(p DBParams) (*sql.DB, error) {
+func NewDB(p DBConfig) (*sql.DB, error) {
 	var dsn string
 	switch p.Driver {
 	case "postgres":

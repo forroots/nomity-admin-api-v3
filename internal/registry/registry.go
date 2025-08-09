@@ -31,7 +31,7 @@ func NewRegistry(cfg config.Config, logger *slog.Logger) (*Registry, error) {
 		Mock:       cfg.Mailer.Mock,
 	})
 
-	db, err := db.NewDB(db.DBParams{
+	db, err := db.NewDB(db.DBConfig{
 		Driver:   cfg.Database.Driver,
 		Host:     cfg.Database.Host,
 		Port:     cfg.Database.Port,

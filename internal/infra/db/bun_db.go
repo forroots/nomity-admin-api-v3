@@ -12,12 +12,12 @@ import (
 	"github.com/uptrace/bun/extra/bundebug"
 )
 
-func NewBunDB(params DBParams, debug bool) (*bun.DB, error) {
+func NewBunDB(params DBConfig) (*bun.DB, error) {
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(params.DSN())))
 
 	db := bun.NewDB(sqldb, pgdialect.New())
 
-	if debug {
+	if params.Debug {
 		db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
 	}
 

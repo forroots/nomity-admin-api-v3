@@ -12,7 +12,7 @@ import (
 var testDB *bun.DB
 
 func TestMain(m *testing.M) {
-	params := db.DBParams{
+	params := db.DBConfig{
 		Driver:   "postgres",
 		Host:     "localhost",
 		Port:     5430,
@@ -20,10 +20,11 @@ func TestMain(m *testing.M) {
 		Password: "nomity_dev",
 		DBName:   "nomity_dev",
 		SSLMode:  "disable",
+		Debug:    true,
 	}
 
 	var err error
-	testDB, err = appdb.NewBunDB(params, true)
+	testDB, err = appdb.NewBunDB(params)
 	if err != nil {
 		panic(err)
 	}

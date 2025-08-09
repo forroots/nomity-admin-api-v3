@@ -12,78 +12,20 @@ type Config struct {
 		Env string `mapstructure:"env"`
 	} `mapstructure:"app"`
 
-	Server struct {
-		Port           int      `mapstructure:"port"`
-		BasePath       string   `mapstructure:"base_path"`
-		TrustedProxies []string `mapstructure:"trusted_proxies"`
-	} `mapstructure:"server"`
-
-	Database struct {
-		Driver   string `mapstructure:"driver"`
-		Host     string `mapstructure:"host"`
-		Port     int    `mapstructure:"port"`
-		User     string `mapstructure:"user"`
-		Password string `mapstructure:"password"`
-		DBName   string `mapstructure:"dbname"`
-		SSLMode  string `mapstructure:"sslmode"`
-		Debug    bool   `mapstructure:"debug"`
-	} `mapstructure:"database"`
-
-	JWT struct {
-		SecretKey                string `mapstructure:"secret_key"`
-		ExpirationMinutes        int    `mapstructure:"expiration_minutes"`
-		RefreshExpirationMinutes int    `mapstructure:"refresh_expiration_minutes"`
-		SigningAlgorithm         string `mapstructure:"signing_algorithm"`
-	} `mapstructure:"jwt"`
-
+	Server ServerConfig `mapstructure:"server"`
 	Cookie struct {
 		SessionID CookieConfig `mapstructure:"session_id"`
 		CSRFToken CookieConfig `mapstructure:"csrf_token"`
 	} `mapstructure:"cookie"`
+	CORS CORSConfig `mapstructure:"cors"`
+	CSRF CSRFConfig `mapstructure:"csrf"`
 
-	CORS struct {
-		Enabled              bool     `mapstructure:"enabled"`
-		AllowOrigins         []string `mapstructure:"allow_origins"`
-		AdvancedAllowHeaders []string `mapstructure:"advanced_allow_headers"`
-		Logging              bool     `mapstructure:"logging"`
-	} `mapstructure:"cors"`
+	JWT JWTConfig `mapstructure:"jwt"`
 
-	CSRF struct {
-		Enabled         bool   `mapstructure:"enabled"`
-		TokenCookieName string `mapstructure:"token_cookie_name"`
-		TokenHeader     string `mapstructure:"token_header"`
-	} `mapstructure:"csrf"`
+	Database DatabaseConfig `mapstructure:"database"`
 
-	Mailer struct {
-		DebugPrint       bool     `mapstructure:"debug_print"`
-		Mock             bool     `mapstructure:"mock"`
-		NotifyRecipients []string `mapstructure:"notify_recipients"`
-	} `mapstructure:"mailer"`
-
-	SMTP struct {
-		Host     string `mapstructure:"host"`
-		Port     int    `mapstructure:"port"`
-		Username string `mapstructure:"username"`
-		Password string `mapstructure:"password"`
-		From     string `mapstructure:"from"`
-		FromName string `mapstructure:"from_name"`
-	} `mapstructure:"smtp"`
-
-	Google struct {
-		CredentialsPath string `mapstructure:"credentials_path"`
-		SpreadsheetID   string `mapstructure:"spreadsheet_id"`
-		SpreadsheetName string `mapstructure:"spreadsheet_name"`
-	} `mapstructure:"google"`
-}
-
-type CookieConfig struct {
-	Name     string `mapstructure:"name"`
-	Path     string `mapstructure:"path"`
-	Domain   string `mapstructure:"domain"`
-	Secure   bool   `mapstructure:"secure"`
-	HttpOnly bool   `mapstructure:"http_only"`
-	SameSite string `mapstructure:"same_site"`
-	MaxAge   int    `mapstructure:"max_age"`
+	Mailer MailerConfig `mapstructure:"mailer"`
+	SMTP   SMTPConfig   `mapstructure:"smtp"`
 }
 
 func Load(path string) (*Config, error) {
