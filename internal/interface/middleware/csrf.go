@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/forroots/nomity-admin-api-v3/internal/config"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
 	"github.com/forroots/nomity-admin-api-v3/internal/utils"
 	"github.com/gin-gonic/gin"
@@ -77,33 +78,20 @@ func NewCSRFHandler(cookieName, headerName string) gin.HandlerFunc {
 	}
 }
 
-func SetCSRFCookieIfNotExists(cookieName string) gin.HandlerFunc {
+func SetCSRFCookieIfNotExists(conf config.CookieConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// if c.Request.Method != http.MethodGet {
-		// 	// GETリクエストでなければCSRFトークンの生成、セットは行わない
-		// 	c.Next()
-		// 	return
-		// }
-
-		// _, err := c.Cookie(cookieName)
-		// if err == nil {
-		// 	// 既にCSRFトークンがクッキーに存在する場合は何もしない
-		// 	c.Next()
-		// 	return
-		// }
-
 		// すでにCSRFトークンがクッキーに存在する場合は期限をスライドする
-		cookeToken, err := c.Cookie(cookieName)
-		if err == nil && cookeToken != "" {
+		cookieToken, err := c.Cookie(conf.Name)
+		if err == nil && cookieToken != "" {
 			// クッキーの期限をスライドする
-			c.SetCookie(cookieName, cookeToken, 3600, "/", "", true, false)
+			c.SetCookie(conf.Name, cookieToken, conf.MaxAge, conf.Path, conf.Domain, conf.Secure, conf.HttpOnly)
 			c.Next()
 			return
 		}
 
 		// トークン生成(1時間有効)
 		token := utils.NewCryptoULIDString()
-		c.SetCookie(cookieName, token, 3600, "/", "", true, false)
+		c.SetCookie(conf.Name, token, conf.MaxAge, conf.Path, conf.Domain, conf.Secure, conf.HttpOnly)
 		c.Next()
 	}
 }

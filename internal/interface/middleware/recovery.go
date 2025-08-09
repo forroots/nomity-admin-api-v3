@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
+	"github.com/forroots/nomity-admin-api-v3/internal/application"
 	"github.com/forroots/nomity-admin-api-v3/internal/interface/response"
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +24,7 @@ func CustomRecovery() gin.HandlerFunc {
 		)
 
 		// JSONで返す
-		code := "internal_server_error"
-		response.AbortWithStatusJSON(c, http.StatusInternalServerError, code, "大変申し訳ございません。システムに不具合が生じております。\n管理者にお問い合わせください。", nil)
+		code := application.APP_ERROR_INTERNAL_SERVER_ERROR
+		response.AbortWithStatusJSON(c, http.StatusInternalServerError, code, "申し訳ございません。予期せぬエラーが発生しました。後ほど再度お試しください。", nil)
 	})
 }
